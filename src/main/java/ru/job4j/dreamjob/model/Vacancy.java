@@ -1,17 +1,30 @@
 package ru.job4j.dreamjob.model;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Map;
 import java.util.Objects;
 
-public class Vacancy {
+public class Vacancy implements Serializable {
 
+    public static final Map<String, String> COLUMN_MAPPING = Map.of(
+            "id", "id",
+            "title", "title",
+            "description", "description",
+            "creation_date", "creationDate",
+            "visible", "visible",
+            "city_id", "cityId",
+            "file_id", "fileId"
+    );
     private int id;
     private String title;
     private String description;
     private LocalDateTime creationDate;
     private boolean visible;
     private City city;
+    private int cityId;
     private int fileId;
+
 
     public Vacancy(int id, String title, String description, City city, boolean visible, int fileId) {
         this.id = id;
@@ -21,7 +34,19 @@ public class Vacancy {
         this.city = city;
         this.creationDate = LocalDateTime.now();
         this.fileId = fileId;
+        this.cityId = city.getId();
     }
+
+    public Vacancy(int id, String title, String description, int cityId, boolean visible, int fileId) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.visible = visible;
+        this.cityId = cityId;
+        this.creationDate = LocalDateTime.now();
+        this.fileId = fileId;
+    }
+
 
     public Vacancy(String title, String description, City city, boolean visible) {
         this.title = title;
@@ -30,6 +55,15 @@ public class Vacancy {
         this.city = city;
         this.creationDate = LocalDateTime.now();
     }
+
+    public Vacancy(String title, String description, int cityId, boolean visible) {
+        this.title = title;
+        this.description = description;
+        this.visible = visible;
+        this.cityId = cityId;
+        this.creationDate = LocalDateTime.now();
+    }
+
 
     public Vacancy() {
          this.creationDate = LocalDateTime.now();
@@ -89,6 +123,14 @@ public class Vacancy {
 
     public void setFileId(int fileId) {
         this.fileId = fileId;
+    }
+
+    public int getCityId() {
+        return cityId;
+    }
+
+    public void setCityId(int cityId) {
+        this.cityId = cityId;
     }
 
     @Override

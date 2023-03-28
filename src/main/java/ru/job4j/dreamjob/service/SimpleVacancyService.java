@@ -14,10 +14,12 @@ public class SimpleVacancyService implements VacancyService {
 
     private final VacancyRepository vacancyRepository;
     private final FileService fileService;
+    private final CityService cityService;
 
-    public SimpleVacancyService(VacancyRepository vacancyRepository, FileService fileService) {
+    public SimpleVacancyService(VacancyRepository vacancyRepository, FileService fileService, CityService cityService) {
         this.vacancyRepository = vacancyRepository;
         this.fileService = fileService;
+        this.cityService = cityService;
     }
 
     @Override
@@ -63,12 +65,21 @@ public class SimpleVacancyService implements VacancyService {
 
     @Override
     public Optional<Vacancy> findById(int id) {
-        return vacancyRepository.findById(id);
+        var vacancyOptional = vacancyRepository.findById(id);
+
+        if (!vacancyOptional.isEmpty()) {
+            var vacancy = vacancyOptional.get();
+            vacancy.setCity(cityService.findById(vacancy.getCityId()).get());
+        }
+
+        return vacancyOptional;
     }
 
     @Override
     public Collection<Vacancy> findAll() {
-        return vacancyRepository.findAll();
+        var vacancies = vacancyRepository.findAll();
+        vacancies.forEach(v -> v.setCity(cityService.findById(v.getCityId()).get()));
+        return vacancies;
     }
 
 }

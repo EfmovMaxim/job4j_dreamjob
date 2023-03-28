@@ -1,6 +1,8 @@
 package ru.job4j.dreamjob.model;
 
-public class City {
+import java.io.Serializable;
+
+public class City implements Serializable {
     private int id;
 
     private String name;
@@ -23,6 +25,11 @@ public class City {
     }
 
     public String getName() {
+        return name;
+    }
+
+    @Override
+    public String toString() {
         return name;
     }
 }

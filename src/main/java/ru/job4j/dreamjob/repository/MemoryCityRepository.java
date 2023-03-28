@@ -10,7 +10,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-@Repository
 @ThreadSafe
 public class MemoryCityRepository implements CityRepository{
     private final Map<Integer, City> cities = new HashMap<>() {

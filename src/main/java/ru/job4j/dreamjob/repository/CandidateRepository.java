@@ -1,5 +1,6 @@
 package ru.job4j.dreamjob.repository;
 
+import ru.job4j.dreamjob.dto.FileDto;
 import ru.job4j.dreamjob.model.Candidate;
 
 import java.util.Collection;

@@ -1,8 +1,9 @@
 package ru.job4j.dreamjob.model;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class File {
+public class File implements Serializable {
 
     private int id;
 

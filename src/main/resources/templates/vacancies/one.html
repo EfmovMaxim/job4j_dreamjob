@@ -45,9 +45,9 @@
                         <input type="text" class="form-control" id="title" name="title" th:field="*{title}" placeholder="Предлагая должность, например, Ведущий Java разработчик">
                     </div>
                     <div class="mb-3">
-                        <label for="city"><b>Город</b></label>
-                        <select class="form-control" id="city" name="city.id">
-                            <option th:each="city : ${cities}" th:value="${city.id}" th:text="${city.name}" th:field="*{city.id}" th:selected="${city.id==city.id}"></option>
+                        <label for="city.id"><b>Город</b></label>
+                        <select class="form-control" id="city.id" name="city.id">
+                            <option th:each="city : ${cities}" th:value="${city.id}" th:text="${city.name}" th:field="*{city.id}" th:selected="${city.id==vacancy.city.id}"></option>
                         </select>
                     </div>
                     <div class="form-check mb-3">
