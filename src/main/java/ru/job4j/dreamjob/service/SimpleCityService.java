@@ -8,7 +8,7 @@ import java.util.Collection;
 import java.util.Optional;
 
 @Service
-public class SimpleCityService implements CityService{
+public class SimpleCityService implements CityService {
     private final MemoryCityRepository memoryCityRepository;
 
     public SimpleCityService() {

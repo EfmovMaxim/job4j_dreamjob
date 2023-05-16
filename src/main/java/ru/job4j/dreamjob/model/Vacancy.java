@@ -25,7 +25,6 @@ public class Vacancy implements Serializable {
     private int cityId;
     private int fileId;
 
-
     public Vacancy(int id, String title, String description, City city, boolean visible, int fileId) {
         this.id = id;
         this.title = title;
@@ -47,7 +46,6 @@ public class Vacancy implements Serializable {
         this.fileId = fileId;
     }
 
-
     public Vacancy(String title, String description, City city, boolean visible) {
         this.title = title;
         this.description = description;
@@ -63,7 +61,6 @@ public class Vacancy implements Serializable {
         this.cityId = cityId;
         this.creationDate = LocalDateTime.now();
     }
-
 
     public Vacancy() {
          this.creationDate = LocalDateTime.now();

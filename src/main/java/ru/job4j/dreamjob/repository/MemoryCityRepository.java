@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @ThreadSafe
-public class MemoryCityRepository implements CityRepository{
+public class MemoryCityRepository implements CityRepository {
     private final Map<Integer, City> cities = new HashMap<>() {
         {
             put(1, new City(1, "Москва"));

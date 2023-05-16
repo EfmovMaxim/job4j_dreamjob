@@ -8,13 +8,17 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ru.job4j.dreamjob.dto.FileDto;
 import ru.job4j.dreamjob.model.Candidate;
+import ru.job4j.dreamjob.model.User;
 import ru.job4j.dreamjob.repository.CandidateRepository;
 import ru.job4j.dreamjob.repository.MemoryCandidateRepository;
 import ru.job4j.dreamjob.service.CandidateService;
 import ru.job4j.dreamjob.service.FileService;
 import ru.job4j.dreamjob.service.SimpleCandidateService;
 
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
+
+import static ru.job4j.dreamjob.util.SessionUser.initUser;
 
 @Controller
 @RequestMapping("/candidates")
@@ -24,20 +28,19 @@ public class CandidateController {
     private final CandidateService candidateService;
     private final FileService fileService;
 
-
     public CandidateController(CandidateService candidateService, FileService fileService) {
         this.candidateService = candidateService;
         this.fileService = fileService;
     }
 
     @GetMapping
-    public String getAll(Model model) {
+    public String getAll(Model model, HttpSession session) {
         model.addAttribute("candidates", candidateService.findAll());
         return "candidates/list";
     }
 
     @GetMapping("/create")
-    public String getCreationPage(Model model) {
+    public String getCreationPage(Model model, HttpSession session) {
         model.addAttribute("candidate", new Candidate("", ""));
         return "candidates/create";
     }
@@ -54,7 +57,7 @@ public class CandidateController {
     }
 
     @GetMapping("/{id}")
-    public String getById(@PathVariable int id, Model model) {
+    public String getById(@PathVariable int id, Model model, HttpSession session) {
         var candidateOptional = candidateService.findById(id);
         if (candidateOptional.isEmpty()) {
             model.addAttribute("message", "Не удалось найти кандидата по id");
@@ -66,7 +69,6 @@ public class CandidateController {
 
     @PostMapping("/update")
     public String update(@ModelAttribute Candidate candidate, @RequestParam MultipartFile file, Model model) {
-
         boolean isUpdated = false;
         try {
             isUpdated = candidateService.update(candidate, new FileDto(file.getOriginalFilename(), file.getBytes()));
@@ -79,7 +81,7 @@ public class CandidateController {
             model.addAttribute("message", "Не удалось обновить резюме");
             return "errors/404";
         }
-    };
+    }
 
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable int id, Model model) {

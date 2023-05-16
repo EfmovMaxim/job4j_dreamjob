@@ -15,7 +15,6 @@ public class City implements Serializable {
         this.name = name;
     }
 
-
     public void setId(int id) {
         this.id = id;
     }

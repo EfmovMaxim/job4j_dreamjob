@@ -7,5 +7,6 @@ import java.util.Optional;
 
 public interface CityService {
     Collection<City> findAll();
+
     Optional<City> findById(int id);
 }

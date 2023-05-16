@@ -8,7 +8,7 @@ import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class MemoryFileRepository implements FileRepository{
+public class MemoryFileRepository implements FileRepository {
 
     private final AtomicInteger nextId = new AtomicInteger(0);
 

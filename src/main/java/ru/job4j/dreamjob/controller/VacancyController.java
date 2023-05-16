@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ru.job4j.dreamjob.dto.FileDto;
+import ru.job4j.dreamjob.model.User;
 import ru.job4j.dreamjob.model.Vacancy;
 import ru.job4j.dreamjob.repository.MemoryVacancyRepository;
 import ru.job4j.dreamjob.repository.VacancyRepository;
@@ -14,8 +15,11 @@ import ru.job4j.dreamjob.service.SimpleVacancyService;
 import ru.job4j.dreamjob.service.VacancyService;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.time.LocalDateTime;
+
+import static ru.job4j.dreamjob.util.SessionUser.initUser;
 
 @Controller
 @RequestMapping("/vacancies") /* Работать с кандидатами будем по URI /vacancies/** */
@@ -31,28 +35,17 @@ public class VacancyController {
     }
 
     @GetMapping
-    public String getAll(Model model) {
+    public String getAll(Model model, HttpSession session) {
         model.addAttribute("vacancies", vacancyService.findAll());
         return "vacancies/list";
     }
 
     @GetMapping("/create")
-    public String getCreationPage(Model model) {
+    public String getCreationPage(Model model, HttpSession session) {
         model.addAttribute("vacancy", new Vacancy("", "", null, false));
         model.addAttribute("cities", cityService.findAll());
         return "vacancies/create";
     }
-    /*
-    @PostMapping("/create")
-    public String create(HttpServletRequest request) {
-        var title = request.getParameter("title");
-        var description = request.getParameter("description");
-        var visible = Boolean.getBoolean(request.getParameter("visible"));
-        int cityId = Integer.parseInt(request.getParameter("cityId"));
-        vacancyService.save(new Vacancy(0, title, description, cityService.findById(cityId).get(), visible));
-        return "redirect:/vacancies";
-    }
-    */
 
     @PostMapping("/create")
     public String create(@ModelAttribute Vacancy vacancy, @RequestParam MultipartFile file, Model model) {
@@ -66,9 +59,8 @@ public class VacancyController {
         }
     }
 
-
     @GetMapping("/{id}")
-    public String getById(Model model, @PathVariable int id) {
+    public String getById(Model model, @PathVariable int id, HttpSession session) {
         var vacancyOptional = vacancyService.findById(id);
         if (vacancyOptional.isEmpty()) {
             model.addAttribute("message", "Не найдена вакансия с указанным id");

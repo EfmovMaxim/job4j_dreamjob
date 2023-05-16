@@ -4,6 +4,7 @@ import org.springframework.stereotype.Repository;
 import org.sql2o.Sql2o;
 import ru.job4j.dreamjob.model.File;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -42,6 +43,14 @@ public class Sql2oFileRepository implements FileRepository {
             var query = connection.createQuery("DELETE FROM files WHERE id = :id");
             var affectedRows = query.addParameter("id", id).executeUpdate().getResult();
             return affectedRows > 0;
+        }
+    }
+
+    public List<File> findAll() {
+        try (var connection = sql2o.open()) {
+            var query = connection.createQuery("SELECT * FROM files");
+            var list = query.executeAndFetch(File.class);
+            return list;
         }
     }
 

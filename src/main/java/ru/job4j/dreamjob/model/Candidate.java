@@ -1,6 +1,7 @@
 package ru.job4j.dreamjob.model;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Map;
 import java.util.Objects;
 
@@ -18,33 +19,31 @@ public class Candidate {
     LocalDateTime creationDate;
     int fileId;
 
-
-
     public Candidate(int id, String name, String description) {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.creationDate = LocalDateTime.now();
+        this.creationDate = LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES);
     }
 
     public Candidate(int id, String name, String description, int fileId) {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.creationDate = LocalDateTime.now();
+        this.creationDate = LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES);
         this.fileId = fileId;
     }
 
     public Candidate(String name, String description) {
         this.name = name;
         this.description = description;
-        this.creationDate = LocalDateTime.now();
+        this.creationDate = LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES);
     }
 
     public Candidate(String name, String description, int fileId) {
         this.name = name;
         this.description = description;
-        this.creationDate = LocalDateTime.now();
+        this.creationDate = LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES);
         this.fileId = fileId;
     }
 
@@ -94,8 +93,12 @@ public class Candidate {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Candidate candidate = (Candidate) o;
         return id == candidate.id;
     }

@@ -12,9 +12,8 @@ import java.util.Optional;
 
 @Repository
 @ThreadSafe
-public class Sql20CandidateRepository implements CandidateRepository{
+public class Sql20CandidateRepository implements CandidateRepository {
     private final Sql2o sql2o;
-
 
     public Sql20CandidateRepository(Sql2o sql2o) {
         this.sql2o = sql2o;
@@ -23,8 +22,7 @@ public class Sql20CandidateRepository implements CandidateRepository{
     @Override
     public Candidate save(Candidate candidate) {
         try (var connection = sql2o.open()) {
-            var query = connection.createQuery("INSERT INTO candidates (id, name, description, creation_date, file_id) VALUES (:id, :name, :description, :creation_date, :file_id)");
-            query.addParameter("id", candidate.getId());
+            var query = connection.createQuery("INSERT INTO candidates (name, description, creation_date, file_id) VALUES (:name, :description, :creation_date, :file_id)");
             query.addParameter("name", candidate.getName());
             query.addParameter("description", candidate.getDescription());
             query.addParameter("creation_date", candidate.getCreationDate());

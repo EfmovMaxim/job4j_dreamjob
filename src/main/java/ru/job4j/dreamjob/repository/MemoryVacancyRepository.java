@@ -20,7 +20,7 @@ public class MemoryVacancyRepository implements VacancyRepository {
 
     private MemoryVacancyRepository() {
         save(new Vacancy(0, "Intern Java Developer", "desc 1", cityRepository.findById(1).get(), true, 0));
-        save(new Vacancy(0, "Junior Java Developer", "desc 2", cityRepository.findById(2).get(), true, 0 ));
+        save(new Vacancy(0, "Junior Java Developer", "desc 2", cityRepository.findById(2).get(), true, 0));
         save(new Vacancy(0, "Junior+ Java Developer", "desc 3", cityRepository.findById(3).get(), true, 0));
         save(new Vacancy(0, "Middle Java Developer", "desc 4", cityRepository.findById(1).get(), true, 0));
         save(new Vacancy(0, "Middle+ Java Developer", "desc 5", cityRepository.findById(2).get(), true, 0));
